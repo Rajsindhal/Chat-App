@@ -1,0 +1,82 @@
+body{
+    background-image: url("/content/Plain Wallpaper Iphone.jpg");
+    height: 100vh;
+}
+
+nav svg{
+    display: block;
+    margin: auto;
+    width: 50px;
+    height: 50px;
+    /* margin-bottom: 10px; */
+}
+
+
+.container{
+    max-width: 965px;
+    background-color: transparent;
+    /* rgb(204, 229, 222) */
+    margin: auto;
+    height: 60vh;
+    padding: 33px;
+    overflow-y: scroll;
+    margin-bottom: 17px;
+
+}
+
+h1{
+    text-align: center;
+    font-size: 30px;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.message{
+    width: 24%;
+    background-color: rgba(57, 189, 167, 0.854);
+    font-family: sans-serif;
+    /* darkclyn */
+    padding: 10px;
+    margin: 17px 5px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.left{
+    float: left;
+    clear: both;
+}
+
+.right{
+    float: right;
+    clear: both;
+}
+
+#send-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* text-align: center; */
+    max-width: 985px;
+    width: 100%;
+    margin: auto;
+}
+
+#messageInp{
+    width: 88%;
+    border: 2px solid black;
+    height: 26px;
+    font-family: cursive;
+    font-size: 16px;
+}
+
+.btn{
+    background-color: lightblue;
+    border: 2px solid black;
+    padding: 6px;
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: 5px;
+    width: 9%;
+    margin-left: 3px;
+}

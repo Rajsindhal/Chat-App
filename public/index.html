@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat app</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+    <svg enable-background="new 0 0 64 64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" fill="#77b3d4" r="32"/><path d="m52 32c0-9.9-9-18-20-18s-20 8.1-20 18c0 9.6 8.3 17.4 18.8 17.9.7 3.7 1.2 6.1 1.2 6.1s5-3 9.6-8.2c6.2-3.1 10.4-9 10.4-15.8z" fill="#231f20" opacity=".2"/><path d="m49 28.8c0 15-17 25.2-17 25.2s-9.4-42 0-42 17 7.5 17 16.8z" fill="#fff"/><ellipse cx="32" cy="30" fill="#fff" rx="20" ry="18"/><g fill="#4f5d73"><circle cx="32" cy="30" r="2"/><circle cx="40" cy="30" r="2"/><circle cx="24" cy="30" r="2"/></g></svg>
+    <h1>Welcome to ShareChat</h1>
+    </nav>
+    <div class="container">
+    <div class="message left">Harry: Hey How are you</div>
+    <div class="message right">Raj: Hello Herry</div>
+    </div>
+    <div class="send">
+    <form action="#" id="send-container">
+        <input type="text" name="messageInp" id="messageInp">
+        <button class="btn" type="submit">Send</button>
+    </form>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        const socket = io();
+        const form = document.getElementById("send-container");
+        const messageInp = document.getElementById("messageInp");
+        const messageContainer = document.querySelector(".container");
+        
+        var audio = new Audio('/content/facebookchatone.mp3')
+
+        const append = (message, position) => {
+            const messageElement = document.createElement('div');
+            messageElement.innerHTML = message;
+            messageElement.classList.add('message')
+            messageElement.classList.add(position);
+            messageContainer.append(messageElement);
+            if(position === 'left'){
+                audio.play();
+            }
+           
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = messageInp.value;
+            if(message == ""){
+                 alert("please Write a msg")
+
+            }else{
+                append(`you: ${message}`, 'right')
+                socket.emit('send', message);
+            }
+            messageInp.value = '';
+            
+        })
+
+        const name = prompt("Enter Your Name To Join");
+
+        socket.emit("new-user-joined", name);
+        socket.on("user-joined", name => {
+            append(`${name} joined the Chat`, 'left')
+        })
+
+        socket.on('receive', data => {
+            append(`${data.name}: ${data.message}`, 'left')
+        })
+
+        socket.on('left', name => {
+            append(`${name} left the Chat`, 'left')
+        })
+
+    </script>
+</body>
+</html>
